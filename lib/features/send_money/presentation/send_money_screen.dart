@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:maya_sol/components/CustomTextField.dart';
+import 'package:maya_sol/di/dependencies_provider.dart';
+import 'package:maya_sol/features/send_money/presentation/send_money_view_model.dart';
+
+import '../../../utils/constants.dart';
+import '../../../utils/routes.dart';
+
+class SendMoneyScreen extends ConsumerWidget {
+  SendMoneyScreen({super.key});
+
+  late SendMoneyViewModel sendMoneyViewModel;
+  final moneyController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    sendMoneyViewModel = ref.watch(sendMoneyViewModelProvider);
+    var sessionManager = ref.read(sessionProvider);
+    return Scaffold(
+      appBar: AppBar(title: Text(title_send_money), actions: [
+        IconButton(
+            onPressed: () {
+              sessionManager.logout();
+              Navigator.pushNamedAndRemoveUntil(context, auth, (r) => false);
+            },
+            icon: Icon(Icons.logout))
+      ]),
+      body: Column(
+        children: [
+          CustomTextField(
+              controller: moneyController,
+              obscure: false,
+              hint: 'Enter Amount',
+              type: TextInputType.number),
+          OutlinedButton(
+              onPressed: () {
+                sendMoneyViewModel.sendMoney("Test", moneyController.text);
+                Navigator.pushNamedAndRemoveUntil(context, home, (r) => false);
+              },
+              child: const Text(submit))
+        ],
+      ),
+    );
+  }
+}

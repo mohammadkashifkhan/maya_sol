@@ -1,22 +1,21 @@
 import 'package:hive/hive.dart';
 
-import '../constants.dart';
+import '../utils/constants.dart';
 import 'model/transaction.dart';
 
-class TransactionsDb {
-  var _transactionBox;
+abstract class TransactionsDb {
+  List<Transaction> getAllTransactions();
 
-  TransactionsDb._create() {}
+  addTransaction(Transaction transaction);
 
-  static Future<TransactionsDb> create() async {
-    final component = TransactionsDb._create();
-    await component._init();
-    return component;
-  }
+  deleteTransaction(int index);
+}
 
-  _init() async {
-    Hive.registerAdapter(TransactionAdapter());
-    _transactionBox = await Hive.openBox<Transaction>(boxName);
+class TransactionsDbImpl extends TransactionsDb {
+  late Box<Transaction> _transactionBox;
+
+  TransactionsDbImpl() {
+    _transactionBox = Hive.box<Transaction>(hive_box_name);
   }
 
   addTransaction(Transaction transaction) {
@@ -29,5 +28,9 @@ class TransactionsDb {
 
   deleteTransaction(int index) {
     _transactionBox.deleteAt(index);
+  }
+
+  void deleteAll() {
+    _transactionBox.clear();
   }
 }

@@ -1,15 +1,11 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:maya_sol/di/dependencies_provider.dart';
-import 'package:maya_sol/features/home/data/home_repository_impl.dart';
+import '../domain/home_repository.dart';
 
-class HomeViewModel extends StateNotifier<bool> {
-  HomeViewModel(this._ref) : super(false) {
-    _homeRepository = _ref.read(homeRepositoryProvider as ProviderListenable<HomeRepositoryImpl>);
-  }
-  late HomeRepositoryImpl _homeRepository;
-  final StateNotifierProviderRef _ref;
+class HomeViewModel {
+  HomeViewModel(this._homeRepository);
 
-  Future<num> doLogin() {
+  final HomeRepository _homeRepository;
+
+  Future<num> getCurrentBalance() {
     return _homeRepository.getCurrentBalance();
   }
 }

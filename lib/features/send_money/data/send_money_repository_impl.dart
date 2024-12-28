@@ -5,6 +5,7 @@ import '../../../persistence/transactions_db.dart';
 
 class SendMoneyRepositoryImpl extends SendMoneyRepository {
   SendMoneyRepositoryImpl(this._transactionsDb);
+
   late TransactionsDb _transactionsDb;
 
   //create

@@ -5,6 +5,7 @@ import '../../../persistence/transactions_db.dart';
 
 class ViewHistoryRepositoryImpl extends ViewHistoryRepository {
   ViewHistoryRepositoryImpl(this._transactionsDb);
+
   late TransactionsDb _transactionsDb;
 
   //read

@@ -1,19 +1,18 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:maya_sol/di/dependencies_provider.dart';
 import 'package:maya_sol/persistence/model/transaction.dart';
 
-import '../data/send_money_repository_impl.dart';
+import '../domain/send_money_repository.dart';
 
-class SendMoneyViewModel extends StateNotifier<bool> {
-  SendMoneyViewModel(this._ref) : super(false) {
-    _sendMoneyRepositoryImpl = _ref.read(sendMoneyRepositoryProvider as ProviderListenable<SendMoneyRepositoryImpl>);
-  }
-  late SendMoneyRepositoryImpl _sendMoneyRepositoryImpl;
-  final StateNotifierProviderRef _ref;
+class SendMoneyViewModel {
+  SendMoneyViewModel(this._sendMoneyRepository);
 
-  Future<void> sendMoney(String name, int amount) {
+  final SendMoneyRepository _sendMoneyRepository;
+
+  Future<void> sendMoney(String name, String amount) {
     DateTime now = DateTime.now();
-    Transaction transaction = Transaction(recipient: name, amount: amount, dateTime: "${now.hour}:${now.minute}:${now.second}");
-    return _sendMoneyRepositoryImpl.addTransaction(transaction);
+    Transaction transaction = Transaction(
+        recipient: name,
+        amount: int.parse(amount),
+        dateTime: "${now.hour}:${now.minute}:${now.second}");
+    return _sendMoneyRepository.addTransaction(transaction);
   }
 }

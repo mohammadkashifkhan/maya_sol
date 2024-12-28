@@ -1,0 +1,10 @@
+const String isLogin = 'is_login';
+const String isUsername = 'user_name';
+const String login = 'Log In';
+const String username = 'Username';
+const String password = 'Password';
+const String submit = 'Submit';
+const String title_home = 'Home';
+const String title_send_money = 'Send Money';
+const String title_view_transactions = 'View Transactions';
+const String hive_box_name = 'transactions';

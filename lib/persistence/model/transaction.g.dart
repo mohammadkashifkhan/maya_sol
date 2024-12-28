@@ -18,7 +18,7 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
     };
     return Transaction(
       recipient: fields[0] as String,
-      amount: fields[1] as int,
+      amount: fields[1] as num,
       dateTime: fields[2] as String,
     );
   }

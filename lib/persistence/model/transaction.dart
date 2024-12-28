@@ -8,7 +8,7 @@ class Transaction extends HiveObject {
   String recipient;
 
   @HiveField(1)
-  int amount;
+  num amount;
 
   @HiveField(2)
   String dateTime;

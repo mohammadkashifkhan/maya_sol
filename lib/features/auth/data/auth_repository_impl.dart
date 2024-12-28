@@ -8,8 +8,8 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<bool> login(String username, String pwd) async {
-    if (username.length < 3 && pwd.length > 3) {
-      _sessionManager.setLogin(true);
+    if (username.length > 3 && pwd.length > 3) {
+      _sessionManager.setUserName(username);
       return Future<bool>.value(true);
     }
     return Future<bool>.value(false);

@@ -1,29 +1,49 @@
+import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart' as Constants;
+import '../utils/constants.dart' as constants;
 
-class SessionManager {
-  var _sharedPreferences;
+abstract class SessionManager {
+  Future<void> clear();
 
-  SessionManager._create() {}
+  Future<void> setUserName(String userName);
 
-  static Future<SessionManager> create() async {
-    final component = SessionManager._create();
-    await component._init();
-    return component;
+  Future<String> getUserName();
+
+  Future<void> logout();
+}
+
+class SessionManagerImpl extends SessionManager {
+  late SharedPreferences _sharedPreferences;
+
+  final Completer<SharedPreferences> initCompleter =
+      Completer<SharedPreferences>();
+
+  SessionManagerImpl() {
+    initCompleter.complete(SharedPreferences.getInstance());
   }
 
-  _init() async {
-    _sharedPreferences = await SharedPreferences.getInstance();
+  @override
+  Future<String> getUserName() async {
+    _sharedPreferences = await initCompleter.future;
+    return _sharedPreferences.getString(constants.isUsername) ?? '';
   }
 
-  //set data into shared preferences like this
-  Future<void> setLogin(bool isLogin) async {
-    _sharedPreferences.setBool(Constants.isLogin, isLogin);
+  @override
+  Future<void> clear() async {
+    _sharedPreferences = await initCompleter.future;
+    await _sharedPreferences.clear();
   }
 
-  //get value from shared preferences
-  Future<bool> getLogin() async {
-    return _sharedPreferences.getBool(Constants.isLogin) ?? false;
+  @override
+  Future<void> logout() {
+    return _sharedPreferences.clear();
+  }
+
+  @override
+  Future<void> setUserName(String userName) async {
+    _sharedPreferences = await initCompleter.future;
+    _sharedPreferences.setString(constants.isUsername, userName);
   }
 }
