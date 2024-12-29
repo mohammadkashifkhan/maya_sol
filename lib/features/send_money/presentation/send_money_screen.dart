@@ -27,16 +27,45 @@ class SendMoneyScreen extends ConsumerWidget {
             icon: Icon(Icons.logout))
       ]),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CustomTextField(
               controller: moneyController,
               obscure: false,
               hint: 'Enter Amount',
               type: TextInputType.number),
-          OutlinedButton(
+          const SizedBox(height: 56),
+          FilledButton(
+              style: FilledButton.styleFrom(
+                  backgroundColor: Colors.blue.shade700),
               onPressed: () {
                 sendMoneyViewModel.sendMoney("Test", moneyController.text);
-                Navigator.pushNamedAndRemoveUntil(context, home, (r) => false);
+                showModalBottomSheet(
+                    context: context,
+                    isDismissible: false,
+                    constraints: BoxConstraints(
+                      minWidth:  600,
+                      minHeight:  300,
+                      maxHeight:  300,
+                    ),
+                    builder: (BuildContext context) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Success"),
+                          FilledButton(
+                              style: FilledButton.styleFrom(
+                                  backgroundColor: Colors.blue.shade700),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pushNamedAndRemoveUntil(context, home, (r) => false);
+                              },
+                              child: Text('Close'))
+                        ],
+                      );
+                    });
               },
               child: const Text(submit))
         ],

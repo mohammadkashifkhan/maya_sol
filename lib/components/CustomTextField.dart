@@ -18,25 +18,24 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: TextFormField(
+        onTapOutside: (PointerDownEvent event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
         validator: (val) {
           if (val!.trim().isEmpty) return "$hint is missing";
           return null;
         },
         controller: controller,
         keyboardType: type,
-        // inputFormatters: <TextInputFormatter>[
-        //   if(type == TextInputType.number)
-        //     FilteringTextInputFormatter.digitsOnly
-        //   else
-        //     FilteringTextInputFormatter.digitsOnly
-        // ],
         obscureText: obscure,
         decoration: InputDecoration(
-            enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white)),
+            enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(16)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400)),
-            fillColor: Colors.grey,
+                borderSide: BorderSide(color: Colors.grey.shade400),
+                borderRadius: BorderRadius.circular(16)),
+            fillColor: Colors.blue.shade200,
             filled: true,
             hintText: hint),
       ),

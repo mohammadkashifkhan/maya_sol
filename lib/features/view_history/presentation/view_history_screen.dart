@@ -32,12 +32,12 @@ class _ViewHistoryScreenState extends ConsumerState<ViewHistoryScreen> {
   }
 
   _showUI(ViewHistoryViewModel viewHistoryViewModel) {
-    if(viewHistoryViewModel.isLoading) {
+    if (viewHistoryViewModel.isLoading) {
       return Container(
         child: CircularProgressIndicator(),
       );
     }
-    if(viewHistoryViewModel.error.isNotEmpty) {
+    if (viewHistoryViewModel.error.isNotEmpty) {
       return Container(
         child: Text(viewHistoryViewModel.error),
       );
@@ -51,10 +51,27 @@ class _ViewHistoryScreenState extends ConsumerState<ViewHistoryScreen> {
               itemCount: dataSnapshot.data?.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  height: 50,
-                  child: Center(
-                      child: Text(
-                          style: TextStyle(color: Colors.black), dataSnapshot.data?[index].amount.toString() ?? '')),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                              style: TextStyle(fontSize: 20),
+                              dataSnapshot.data?[index].recipient ?? ''),
+                          Text(
+                              style: TextStyle(color: Colors.black),
+                              "${dataSnapshot.data?[index].amount.toString() ??
+                                  ''} php"),
+                        ],
+                      ),
+                      Text(
+                          style: TextStyle(fontSize: 10),
+                          dataSnapshot.data?[index].dateTime ?? ''),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
                 );
               });
         } else
