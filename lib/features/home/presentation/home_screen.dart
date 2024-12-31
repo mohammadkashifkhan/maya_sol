@@ -38,22 +38,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               children: [
                 Text(
                     style: TextStyle(fontSize: 24),
-                    "Welcome ${dataSnapshot.data?[0] ?? ''}"),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                          "Total Balance: ${_obscureBalance ? '******' : dataSnapshot.data?[1].toString() ?? 0} php"),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _obscureBalance = !_obscureBalance;
-                            });
-                          },
-                          icon: Icon(_obscureBalance
-                              ? Icons.visibility
-                              : Icons.visibility_off))
-                    ]),
+                    "$welcome ${dataSnapshot.data?[0] ?? ''}"),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(
+                      "$total_balance ${_obscureBalance ? obscured_balance : dataSnapshot.data?[1].toString() ?? 0} $currency"),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _obscureBalance = !_obscureBalance;
+                        });
+                      },
+                      icon: Icon(_obscureBalance
+                          ? Icons.visibility
+                          : Icons.visibility_off))
+                ]),
                 const SizedBox(height: 56),
                 FilledButton(
                     style: FilledButton.styleFrom(
@@ -61,14 +59,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     onPressed: () {
                       Navigator.pushNamed(context, send_money);
                     },
-                    child: Text('Send Money')),
+                    child: Text(title_send_money)),
                 FilledButton(
                     style: FilledButton.styleFrom(
                         backgroundColor: Colors.blue.shade700),
                     onPressed: () {
                       Navigator.pushNamed(context, view_history);
                     },
-                    child: Text('View Transactions'))
+                    child: Text(title_view_transactions))
               ],
             );
           } else

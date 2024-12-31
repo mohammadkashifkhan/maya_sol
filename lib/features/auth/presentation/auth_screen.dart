@@ -18,37 +18,37 @@ class AuthScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     authViewModel = ref.watch(authViewModelProvider);
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center, children: [
-          CustomTextField(
-              controller: usernameController,
-              obscure: false,
-              hint: username,
-              type: TextInputType.text),
-          CustomTextField(
-              controller: pwdController,
-              obscure: true,
-              hint: password,
-              type: TextInputType.text),
-          const SizedBox(height: 16),
-          FilledButton(
-              onPressed: () {
-                authViewModel
-                    .doLogin(usernameController.text, pwdController.text)
-                    .then((isSuccess) {
-                  if (isSuccess) {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, home, (r) => false);
-                  }
-                });
-              },
-              style: FilledButton.styleFrom(
-                  backgroundColor: Colors.blue.shade700),
-              child: const Text(login))
-        ]),
-      )
-    );
+        body: SafeArea(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomTextField(
+                controller: usernameController,
+                obscure: false,
+                hint: username,
+                type: TextInputType.text),
+            CustomTextField(
+                controller: pwdController,
+                obscure: true,
+                hint: password,
+                type: TextInputType.text),
+            const SizedBox(height: 16),
+            FilledButton(
+                onPressed: () {
+                  authViewModel
+                      .doLogin(usernameController.text, pwdController.text)
+                      .then((isSuccess) {
+                    if (isSuccess) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, home, (r) => false);
+                    }
+                  });
+                },
+                style: FilledButton.styleFrom(
+                    backgroundColor: Colors.blue.shade700),
+                child: const Text(login))
+          ]),
+    ));
   }
 }

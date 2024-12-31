@@ -45,9 +45,7 @@ final homeRepositoryProvider = Provider<HomeRepository>(
 final homeViewModelProvider = Provider<HomeViewModel>(
   (ref) {
     final HomeRepository homeRepository = ref.watch(homeRepositoryProvider);
-    homeRepository.getCurrentBalance().then((val) {
-      print("check123- $val");
-    });
+    homeRepository.getCurrentBalance().then((val) {});
     return HomeViewModel(homeRepository);
   },
 );

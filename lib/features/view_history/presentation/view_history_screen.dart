@@ -62,8 +62,7 @@ class _ViewHistoryScreenState extends ConsumerState<ViewHistoryScreen> {
                               dataSnapshot.data?[index].recipient ?? ''),
                           Text(
                               style: TextStyle(color: Colors.black),
-                              "${dataSnapshot.data?[index].amount.toString() ??
-                                  ''} php"),
+                              "${dataSnapshot.data?[index].amount.toString() ?? ''} $currency"),
                         ],
                       ),
                       Text(
